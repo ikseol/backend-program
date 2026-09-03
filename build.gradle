@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.0' // Spring Boot 버전 3.4.0으로.쓰겠다는 뜻
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group 'me.ihchoi' // 그룹 ID 아까 설정해놨던 것임
+version '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // java는 17버전 사용함.
+    }
+}
+
+
+repositories { // 외부 라이브러리 무엇을 사용할지.
+    mavenCentral()
+}
+
+
+dependencies { // 의존성 외부 라이브러리 (스프링부트 관련 프레임워크인듯)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+test {
+    useJUnitPlatform()
+}
