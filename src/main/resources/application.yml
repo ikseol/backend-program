@@ -1,0 +1,12 @@
+# 스프링 -> JPA 설정 (DB관련 설정)을 할 것. 이라고 선언
+spring:
+  jpa:
+    # 전송 쿼리 확인
+    show-sql: true # 내부에서 실행되는 sql문을 콘솔에 보여주기
+    properties:
+      hibernate: # jpa 리포지토리 인터페이스만 선언했는데 실행됨 -> 하이버네이트 JPA 구현체?
+        format_sql: true
+
+    # 아까 에러 ( 테이블 생성 전 insert 실행한 것 ) 고치는 라인
+    # 테이블 생성 후에 data.sql 실행
+    defer-datasource-initialization: true

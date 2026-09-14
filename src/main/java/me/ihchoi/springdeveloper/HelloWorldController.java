@@ -19,25 +19,26 @@ public class HelloWorldController {
 
     // http://localhost:8080/test 에 접속했을때 -? Hello Everyone 리턴하는 코드
     // 컨트롤러를 추가로 만들어도 되는데 지금은 메소드만 추가
-    @GetMapping("/test")  // url과 메소드의 맵핑, 기본적으로 get방식
-    public String test() {
-        return "Hello Everyone!!!!!!!!!";
-    }
 
-    @PostMapping("/test") // post 방식 처리용 맵핑.  localhost:8080/test 에 post 요청이 오면 해당 메소드 실행
-    public String postTest() {
-        return "Post Test Response!";
-    }
-
-    @DeleteMapping("/test") // delete 방식 처리용 맵핑.  localhost:8080/test 에 delete 요청이 오면 해당 메소드 실행
-    public String deleteTest() {
-        return "delete Test Response!";
-    }
-
-    @PutMapping("/test") // put 방식 처리용 맵핑.  localhost:8080/test 에 put 요청이 오면 해당 메소드 실행
-    public String putTest() {
-        return "Put Test Response!";
-    }
+//    @GetMapping("/test")  // url과 메소드의 맵핑, 기본적으로 get방식
+//    public String test() {
+//        return "Hello Everyone!!!!!!!!!";
+//    }
+//
+//    @PostMapping("/test") // post 방식 처리용 맵핑.  localhost:8080/test 에 post 요청이 오면 해당 메소드 실행
+//    public String postTest() {
+//        return "Post Test Response!";
+//    }
+//
+//    @DeleteMapping("/test") // delete 방식 처리용 맵핑.  localhost:8080/test 에 delete 요청이 오면 해당 메소드 실행
+//    public String deleteTest() {
+//        return "delete Test Response!";
+//    }
+//
+//    @PutMapping("/test") // put 방식 처리용 맵핑.  localhost:8080/test 에 put 요청이 오면 해당 메소드 실행
+//    public String putTest() {
+//        return "Put Test Response!";
+//    }
 
     // 이런 식으로 요청별 처리용 맵핑 -> 웹 브라우저에서 테스트 하려면 별도로 요청을 보낼 컨트롤러(프론트를 만들어야 함)
     // 그래서 Postman을 사용해서 요청을 보내고, Response를 받을 수 있음.
