@@ -28,4 +28,18 @@ public class MemberService { // 비즈니스 로직을 처리함. = DB에 접근
         // 어노테이션이 붙은 클래스 는 우리가 생성 안하고 스프링부트가 생성+나에게 주입 => DI 의존성 주입 IoC(제어의 역전) 구현
         return memberRepository.findAll(); // 내부적으로 DB서버에 sql문 select * from member 실행
     }
+
+    // 새로운 유저를 DB에 저장하는 메소드
+    // 맴버를 저장하는 메소드.
+    // Member라는 엔터티 객체가 리턴. + 이름은 saveMembers + 입력인자는 Member클래스의 member객체.
+//    public Member saveMembers(Long id, String name) 이렇게도 구현은 가능.
+    // 계층 - 계층 데이터 전송 시에는 DTO 만들어서 전달.
+    public Member saveMembers(Member member) {
+        return memberRepository.save(member); // 내부적으로 insert.. sql로 처리
+    }
+
+    // 맴버 객체로 리턴해줌 -> save요청으로 메소드를 만들어줌 리턴 안해주면 오류.????
+    // memberRepository.save(member);가 리턴 해주는 멤버 객체를 한번 더 리턴 해주는 형태.
+
+
 }
