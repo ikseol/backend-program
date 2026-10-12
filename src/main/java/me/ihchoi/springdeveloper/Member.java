@@ -20,12 +20,17 @@ public class Member { // 이 아래에 칼럼을 주면 실제 DB랑 연동? 1 �
     private Long id;
     @Column(nullable = false, name="name") // 이 칼럼이, nullable=false 널값 비허용이라고 지정
     private String name;
-// @entity  어노테이션에 테이블 지정해놓은것이 DB에 없으면 자동으로 생성
+//  @entity  어노테이션에 테이블 지정해놓은것이 DB에 없으면 자동으로 생성
 //    lombok이 이걸 내부적으로 만들어 준다는 뜻.
 //    public member(Long id, String name) {
 //        this.id = id;
 //        this.name = name;
 //    }
+
+    // 10-08 추가 생성자 이름만 전달받았을 때의 생성자
+    public  Member(String name) {
+        this.name = name;
+    }
 
 }
 // 이런식으로 적어두면 실행될 떄 DB가 없으면 DB가 생성 + 매칭됨.
