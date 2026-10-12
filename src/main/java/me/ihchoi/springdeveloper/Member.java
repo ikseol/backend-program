@@ -1,6 +1,5 @@
 package me.ihchoi.springdeveloper;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
