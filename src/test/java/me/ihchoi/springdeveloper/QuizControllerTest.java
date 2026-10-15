@@ -69,7 +69,7 @@ class QuizControllerTest {
     public void postQuiz1() throws Exception {
         // given 준비
         final String url = "/quiz";
-//        final String body = objectMapper.writeValueAsString(new Code(1)); 개인 테스트 수업 X
+//        final String body = objectMapper.writeValueAsString(new Code(1)); 개인 테스트 수업 내용 X
 
         // when 실행
         final ResultActions result = mockMvc.perform(post(url)
