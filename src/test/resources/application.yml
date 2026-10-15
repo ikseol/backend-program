@@ -1,0 +1,5 @@
+spring :
+  sql :
+    init :
+      mode : never
+# 테스트를 실행할 때 src/main/resources 아래의 data.sql파일이 실행되지 않도록 설정
