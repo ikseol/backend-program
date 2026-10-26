@@ -1,15 +1,12 @@
 package me.ihchoi.springdeveloper;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)   // 어노테이션은 생성자.? 와 비슷함.
 @AllArgsConstructor
 @Getter                                  // 이런 어노테이션은 lombok라이브러리에서 가져옴
-
+@Setter
 @Entity // 엔티티 클래스라고 명시.
 public class Member { // 이 아래에 칼럼을 주면 실제 DB랑 연동? 1 대 1 매칭? 된다고 함. 이게 JPA
     // 유저ID와 이름만 만듦
@@ -30,6 +27,13 @@ public class Member { // 이 아래에 칼럼을 주면 실제 DB랑 연동? 1 �
     public  Member(String name) {
         this.name = name;
     }
+
+
+//    // 10-22 이런식으로 구현도 되고, lombok의 setter 어노테이션으로도 구현가능
+//        public void setName(String name) {
+//            this.name=name;
+//        }
+// @entity 어노테이션 아래쪽에 @Setter 추가하면 됨.
 
 }
 // 이런식으로 적어두면 실행될 떄 DB가 없으면 DB가 생성 + 매칭됨.

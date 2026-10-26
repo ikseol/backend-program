@@ -22,7 +22,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // save() : insert into member(id, name) value (?, ?); update member set ,,, where id=?;
 
     // findByName() : select * from member where name = ?; -> 이것도 불가능 직접 구현 해야함
-    public List<Member> findByName(String name);  // 다음시간(10-22일)에 테스트코드 작성
+//    public List<Member> findByName(String name);  // 다음시간(10-22일)에 테스트코드 작성
+
+    // 10-22 추가. 이런 식으로 작성해도 작동함.
+    public Optional<Member> findByName(String name);
+    // SELECT * FROM MEMBER WHERE NAME = ? LIMIT 1; Top-N 쿼리의 SQL문은 DBMS마다 다름.
+    // 리턴 타입과 메소드 선언에 따라 내부적으로 SQL문을 자동으로 만들어 줌.
+
     // ID를 기반으로 찾기는 있어서 가능, Save도 엔티티 객체 있어서 상관 X
 
     // 근데 name이나 email로 조회 하려면 JPA가 어떻게 알 수 있는가?
@@ -35,4 +41,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     // 1개 혹은 0개가 결과로 나오는 메소드는 Optional객체 사용
 
     // 등을 찾기 위해서는 직접 구현 해야함.
+
+    // 10-22
+    // 모든 테이블에 name이라는 컬럼이 존재하는게 아니기 때문에
+    // 따로 메소드를 구현해줘야 함.
+    // Member라는 테이블에 name이 있는지, email이 있는지 알 수 없어서 직접 만들어 줘야함.
+    // ID는 생성을 강제하기때문에 무조건 있는걸 알 수 있어서 기본 사용 가능
 }
