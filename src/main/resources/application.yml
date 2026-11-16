@@ -1,5 +1,12 @@
 # 스프링 -> JPA 설정 (DB관련 설정)을 할 것. 이라고 선언
 spring:
+  # 11-02 추가
+  datasource:
+    url: jdbc:h2:mem:testdb #db에 직접 접근하기 위해서 url이 필요
+  h2:
+    console: # 브라우저로 DB를 직접 볼 수 있게 하겠다
+      enabled : true
+      path: /h2-console
   jpa:
     # 전송 쿼리 확인
     show-sql: true # 내부에서 실행되는 sql문을 콘솔에 보여주기
