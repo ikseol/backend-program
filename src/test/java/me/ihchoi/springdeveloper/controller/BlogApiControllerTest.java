@@ -1,10 +1,12 @@
 package me.ihchoi.springdeveloper.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.ihchoi.springdeveloper.dao.Article;
 import me.ihchoi.springdeveloper.dto.ArticleCreationRequest;
 import me.ihchoi.springdeveloper.repository.BlogRepository;
 import me.ihchoi.springdeveloper.service.BlogService;
+import net.minidev.json.parser.JSONParser;
 import org.hibernate.engine.jdbc.Size;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +21,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,21 +106,60 @@ class BlogApiControllerTest {
     // 이럼 하나의 메소드 실행 후 모든 정보 삭제 -> 깨긋한 상태에서 테스트 -> 오류발생 안함.
 
     @DisplayName("글 업데이트 테스트")
-    public void updateTest() {
+    @Test
+    public void updateTest() throws Exception {
         // 1. given
+        String url = "/api/articles";
+
+        // 새 글 등록  ID=1
+        Article article = new Article("수정 전 제목", "수정 전 내용");
+        blogRepository.save(article);
+
+        // 글 수정을 위한 정보 작성
+        String newTitle = "수정 후 제목";
+        String newContent = "수정 후 내용";
+
+        // 수정할 정보를 담은 객체를 만들고
+        Article newArticle = new Article(newTitle, newContent);
+        // 그 객체를 objectMapper를 통해 Json으로 변환
+        String JsonNewArticle = objectMapper.writeValueAsString(newArticle);
 
         // 2. when
-
+        ResultActions result =
+                mockMvc.perform(put(url+"/{id}", article.getId())  // 등록한 Article의 ID는 1 -> /api/articles/1 경로로 PUT 요청 보냄
+                        .contentType(MediaType.APPLICATION_JSON)  // 콘텐츠의 타입은 JSON
+                        .content(JsonNewArticle)); // 바디에는 아까 수정할 정보를  JSON으로 변환한것을 넣음
         // 3. then
+        result.andExpect(status().isOk()); // HTTP요청이 OK?
+
+        // 수정된 id1번인 글을 가져와서
+        Article updatedArticle = blogRepository.findById(1L).get();
+        assertThat(updatedArticle.getTitle()).isEqualTo(newTitle); // 아까 등록해둔 새 제목과 같은지?
+        assertThat(updatedArticle.getContent()).isEqualTo(newContent); // 아까 등록해둔 새 내용과 같은지? 검증
     }
 
     @DisplayName("글 삭제 테스트")
-    public void deleteTest() {
+    @Test
+    public void deleteTest() throws Exception {
         // 1. given
+        String url = "/api/articles";
+
+        // 새 글 등록  ID=1
+        Article article = new Article("등록할 제목", "등록할 내용");
+        blogRepository.save(article);
 
         // 2. when
+        ResultActions result = mockMvc.perform(delete(url+"/{id}", article.getId()));
 
         // 3. then
+        // API 응답 상태 코드가 200 OK인지 확인
+        result.andExpect(status().isOk());
+
+        // 방금 지운 ID로 글 조회
+        Optional<Article> deletedArticle = blogRepository.findById( (long) article.getId());
+
+        // 조회 결과 옵셔널 배열이 비어있는가? 체크해서 비어있으면 삭제 완료
+        assertThat(deletedArticle).isEmpty();
     }
 
 }
