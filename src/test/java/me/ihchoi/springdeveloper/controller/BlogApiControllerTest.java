@@ -105,6 +105,45 @@ class BlogApiControllerTest {
     }
     // 이럼 하나의 메소드 실행 후 모든 정보 삭제 -> 깨긋한 상태에서 테스트 -> 오류발생 안함.
 
+    @DisplayName("특정 id를 가진 글 조회")
+    @Test
+    public void getArticleById() throws Exception {
+        // 1. 준비 Given
+        String url = "/api/articles";
+
+        // 등록할 제목과 내용을 저장
+        String title = "11월 19일 목요일 등록한 테스트";
+        String content = "특정 블로그 글 조회 테스트 코드 작성";
+
+        // 빌더 패턴을 사용해 DB에 레코드 저장
+        Article savedArticle = blogRepository.save(Article.builder()
+                                    .content(content)
+                                    .title(title)
+                                    .build());
+
+        // 2. 실행 when
+
+        int id = savedArticle.getId();  // 저장된 글의 ID를 id 변수에 담음 이 경우 id가 1이 될 예정
+
+        //  mockMvc를 활용해 /api/articles/1 url에 get요청을 보내서 응답을 result에 저장
+        // 응답( .accept() )은 JSON(MediaType.APPLICATION_JSON)으로 받겠다.
+        ResultActions result = mockMvc.perform(get(url+"/{id}", id).accept(MediaType.APPLICATION_JSON));
+
+        // get(url+"/{id}", id) 의 의미
+        // url =  "/api/articles"
+        // {id}에는 위에서 저장한 id의 값이 들어감. = /1
+        // 두가지를 + 연산으로 합치면 /api/articles/1 url에 요청이 감.
+
+        // 3. 검증 then
+        // 응답의 HTTP Status가 OK인지 검증
+        result.andExpect(status().isOk());
+        // result (응답) 의 jsonPath(응답으로 온 json)의 title의 값이 위에서 작성한 title변수의 값과 같은가?
+        // $.title 이란? 응답으로 온 JSON의 최상위에 있는 title을 의미함.
+        result.andExpect(jsonPath("$.title").value(title));
+        // 위와 동일하게 content 내용을 검사하는 코드
+        result.andExpect(jsonPath("$.content").value(content));
+    }
+
     @DisplayName("글 업데이트 테스트")
     @Test
     public void updateTest() throws Exception {
@@ -152,6 +191,7 @@ class BlogApiControllerTest {
         ResultActions result = mockMvc.perform(delete(url+"/{id}", article.getId()));
 
         // 3. then
+
         // API 응답 상태 코드가 200 OK인지 확인
         result.andExpect(status().isOk());
 

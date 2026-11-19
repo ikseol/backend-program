@@ -1,0 +1,30 @@
+<!-- HTML을 요청 -> 보통 동적인 페이지를 만들고 싶음. 동적인 페이지를 만드는 방법은?
+     HTML안에 타임리프 문법을 사용하면 동적인 페이지를 만들 수 있음. -->
+
+<!doctype html>
+<!-- 여기에 xmlns:th="http://www.thymeleaf.org" 을 써줘야 함.-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- 접근하는 디바이스 화면 크기에 따라서 화면이 깨질 수도 있으니 디바이스에 맞춰 레이아웃을 만들어 줌  -> 반응형 웹 -->
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>타임리프 익히기</h1>
+    <p></p>
+    <div>
+        <!-- th: 라는 접두어를 사용하는것이 타임리프 문법.-->
+        <p th:text="${person.name}">이름</p>            <!-- 컨트롤러가 데이터를 넘겨줌 데이터를 넘겨주는 방법은? (컨트롤러에 구현)-->
+        <p th:text="${person.age}">나이</p>
+        <p>취미</p>
+        <ul>
+            <li>운동</li>
+            <span>(대표 취미)</span>
+        </ul>
+    </div>
+    <a href="">글보기</a>
+</body>
+</html>
