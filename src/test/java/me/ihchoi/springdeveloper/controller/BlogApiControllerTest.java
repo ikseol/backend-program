@@ -225,9 +225,11 @@ public class BlogApiControllerTest {
         // 저장한 글이 2개이기 때문에 => 응답으로 온 배열의 길이가 2개인가?
         result.andExpect(jsonPath("$.length()").value(2));
 
+        // json 배열의 0번에 위치한 json의 제목과 내용을 비교
         result.andExpect((jsonPath("$[0].title").value(title1)));
         result.andExpect((jsonPath("$[0].content").value(content1)));
 
+        // json 배열의 1번에 위치한 json의 제목과 내용을 비교
         result.andExpect((jsonPath("$[1].title").value(title2)));
         result.andExpect((jsonPath("$[1].content").value(content2)));
     }
