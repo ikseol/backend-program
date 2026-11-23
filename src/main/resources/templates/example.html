@@ -14,17 +14,50 @@
 </head>
 <body>
     <h1>타임리프 익히기</h1>
-    <p></p>
-    <div>
-        <!-- th: 라는 접두어를 사용하는것이 타임리프 문법.-->
-        <p th:text="${person.name}">이름</p>            <!-- 컨트롤러가 데이터를 넘겨줌 데이터를 넘겨주는 방법은? (컨트롤러에 구현)-->
-        <p th:text="${person.age}">나이</p>
+    <p th:text="${#temporals.format(today, 'yyyy-MM-dd')}"></p>
+<!--    <p th:text="${#temporals.createToday()}"></p>-->
+<!--    달러 : 모델 객체의 값을 검색. -->
+<!--    유틸리티 객체 : ${}안에 #으로 표시. -> #으로 안하면 model에서 temporals객체를 찾아봄 -->
+<!--    temporals 날짜 관련된 객체?today 오늘 날짜, 'yyyy-MM-dd' 포맷을 지정 -->
+
+<!--    <div>-->
+<!--        &lt;!&ndash; th: 라는 접두어를 사용하는것이 타임리프 문법.&ndash;&gt;-->
+<!--        <p th:text="${person.name}">이름</p>            &lt;!&ndash; 컨트롤러가 데이터를 넘겨줌 데이터를 넘겨주는 방법은? (컨트롤러에 구현)&ndash;&gt;-->
+<!--        <p th:text="${person.age}">나이</p>-->
+<!--        <p>취미</p>-->
+<!--        <ul>-->
+<!--            <li th:each="hobby : ${person.hobbies}">-->
+<!--                <span th:text="${hobby}">운동</span>-->
+<!--                <span th:if="${hobby == '운동'}">(대표 취미)</span>-->
+<!--            </li>-->
+<!--&lt;!&ndash;            th:each 로 person 객체의 hobbies 리스트를 순회,  hobby에 들어간 취미를 li로 감싸진 택스트 하나로 변환해서 작성&ndash;&gt;-->
+<!--&lt;!&ndash;            조건 만족 시에만 span을 출력하려고 함. 대표 취미일때만 표시할 예정 (대표 취미는 운동으로) &ndash;&gt;-->
+<!--        </ul>-->
+<!--    </div>-->
+
+<!--     위의 내용 주석처리하고 실습 진행-->
+<!--    객체 안에 있는 맴버변수에 접근할때 모든 태그를 감싸고 있는 태그(div 등)에 object 키워드에 객체를 할당하고-->
+<!--    아래에 있는 태그에서 *{...} 으로 접근 -> 자동적으로 ${person.name} 등으로 처리해줌 -->
+    <div th:object="${person}">
+        <p th:text="*{name}">이름</p>
+        <p th:text="*{age}">나이</p>
         <p>취미</p>
         <ul>
-            <li>운동</li>
-            <span>(대표 취미)</span>
+            <li th:each="hobby : *{hobbies}">
+                <span th:text="${hobby}">운동</span>
+                <span th:if="${hobby == '운동'}">(대표 취미)</span>
+<!--                hobby는 객체맴버변수가 아니기 때문에 $로 접근해야함.-->
+            </li>
         </ul>
     </div>
-    <a href="">글보기</a>
+    <a href="/api/articles">글보기</a>
+<!-- 기본적으로 get 방식으로 리턴 -> json으로 모든 글 이 올 예정 -->
+
+<!-- 동적으로 변경되어야 하는 경우에는? -->
+    <a th:href="@{/api/articles/{id}(id=${person.blogId})}">동적 글보기</a>
+<!-- 타임리프에서 url 활용? @{}를 사용해야함-->
+<!-- 동적인 url이 와야할 경우에 사용함. 정적인 url은 일반 앵커태그 사용-->
+<!--{id}(id=${person.age}) id변수는 person.age 라는 의미 -->
+<!--@{/api/articles/{person.age}} 는 동작하지 않의니 유의해야함.-->
 </body>
 </html>
