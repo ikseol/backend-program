@@ -47,8 +47,18 @@
                 <span th:text="${hobby}">운동</span>
                 <span th:if="${hobby == '운동'}">(대표 취미)</span>
 <!--                hobby는 객체맴버변수가 아니기 때문에 $로 접근해야함.-->
+<!--                취미가 운동이 아닐때만 생성할 태그-->
+<!--                <span th:unless="${hobby == '운동'}">(일반 취미)</span>-->
+                <span th:if="${hobby != '운동'}">(일반 취미)</span>
             </li>
         </ul>
+
+<!--        11-26-->
+<!--       div 태그 안에 있는 경우 이런식으로 작성 가능 -->
+        <a th:href="@{/api/articles/{id}(id=*{blogId})}">
+            <span th:text="*{blogId}"></span>번 글 보기
+        </a>
+<!--        1번 글보기 가 생성됨  만약 2번글 보기로 바꾸고 싶다면 컨트롤러의 model 객체의 정보를 수정해야함.-->
     </div>
     <a href="/api/articles">글보기</a>
 <!-- 기본적으로 get 방식으로 리턴 -> json으로 모든 글 이 올 예정 -->
@@ -59,5 +69,6 @@
 <!-- 동적인 url이 와야할 경우에 사용함. 정적인 url은 일반 앵커태그 사용-->
 <!--{id}(id=${person.age}) id변수는 person.age 라는 의미 -->
 <!--@{/api/articles/{person.age}} 는 동작하지 않의니 유의해야함.-->
+
 </body>
 </html>
